@@ -12,9 +12,11 @@ const Layout = ({ preview, children }: Props) => {
     <>
       <Meta />
       <div className="min-h-screen">
+        {/* will remove alert because it will no longer be applicable */}
         <Alert preview={preview} />
         <main>{children}</main>
       </div>
+      {/* will probably remove footer as well */}
       <Footer />
     </>
   )

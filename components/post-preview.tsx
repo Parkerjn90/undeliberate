@@ -39,6 +39,7 @@ const PostPreview = ({
         <DateFormatter dateString={date} />
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+      {/* may get rid of Avatar - it's only going to be one person posting */}
       <Avatar name={author.name} picture={author.picture} />
     </div>
   )
