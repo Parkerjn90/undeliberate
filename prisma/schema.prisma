@@ -17,6 +17,7 @@ model Posts {
   updated_at  DateTime
   description String
   draft       Boolean
+  comments    Comments?
   categories  postCategories[]
 }
 
@@ -34,4 +35,28 @@ model postCategories {
 
   @@id([postId, categoryId])
   @@index([categoryId], map: "postCategories_categoryId_fkey")
+}
+
+model Comments {
+  id       Int      @unique @default(autoincrement())
+  username String
+  email    String
+  title    String
+  comment  String
+  postId   Int      @id
+  post     Posts    @relation(fields: [postId], references: [id])
+  reply    Replies?
+}
+
+model Replies {
+  comment   String
+  commentId Int      @id
+  comments  Comments @relation(fields: [commentId], references: [id])
+}
+
+model PageInfo {
+  id    Int    @id @default(autoincrement())
+  image String
+  title String
+  about String
 }
