@@ -7,14 +7,36 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
+import { PrismaClient, Prisma } from '@prisma/client'
+const prisma = new PrismaClient()
 
 type Props = {
   allPosts: Post[]
 }
+async function main() {
+  const post = await prisma.posts.findFirst({
+    where: {
+      id: 61
+    }
+  })
+
+  console.log('results: ', post)
+}
+
+main()
+  // .then(results => console.log('results: ', results))
+  .catch(e => console.error(e.message))
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
 
 export default function Index({ allPosts }: Props) {
+
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
+
+
+
   return (
     <>
       <Layout>

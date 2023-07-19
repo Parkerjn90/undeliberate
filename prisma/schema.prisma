@@ -8,55 +8,25 @@ datasource db {
 }
 
 model Posts {
-  id          Int              @id @default(autoincrement())
-  title       String
-  content     String
-  author      String
-  image       String
-  created_at  DateTime         @default(now())
-  updated_at  DateTime
-  description String
-  draft       Boolean
-  comments    Comments?
-  categories  postCategories[]
-}
-
-model Categories {
-  id       Int              @id @default(autoincrement())
-  category String
-  posts    postCategories[]
+  id          Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  title       String?   @db.Text
+  content     String?   @db.Text
+  author      String?   @db.Text
+  image       String?   @db.Text
+  created_at  DateTime? @default(now()) @db.Timestamp(0)
+  updated_at  DateTime? @default(now()) @db.Timestamp(0)
+  description String?   @db.Text
+  postNum     Int?
+  draft       Boolean?  @default(false)
 }
 
 model postCategories {
-  postId     Int
-  categoryId Int
-  categories Categories @relation(fields: [categoryId], references: [id])
-  posts      Posts      @relation(fields: [postId], references: [id])
-
-  @@id([postId, categoryId])
-  @@index([categoryId], map: "postCategories_categoryId_fkey")
+  id         Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  postId     String @db.VarChar(45)
+  categoryId String @db.VarChar(45)
 }
 
-model Comments {
-  id       Int      @unique @default(autoincrement())
-  username String
-  email    String
-  title    String
-  comment  String
-  postId   Int      @id
-  post     Posts    @relation(fields: [postId], references: [id])
-  reply    Replies?
-}
-
-model Replies {
-  comment   String
-  commentId Int      @id
-  comments  Comments @relation(fields: [commentId], references: [id])
-}
-
-model PageInfo {
-  id    Int    @id @default(autoincrement())
-  image String
-  title String
-  about String
+model categories {
+  id       Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  category String @db.VarChar(100)
 }
