@@ -10,12 +10,12 @@ datasource db {
 model Posts {
   id          Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
   title       String?   @db.Text
-  content     String?   @db.Text
+  content     String    @db.Text
   author      String?   @db.Text
-  image       String?   @db.Text
+  image       String    @db.Text
   created_at  DateTime? @default(now()) @db.Timestamp(0)
-  updated_at  DateTime? @default(now()) @db.Timestamp(0)
-  description String?   @db.Text
+  updated_at  DateTime? @default(now()) @updatedAt @db.Timestamp(0)
+  description String    @db.Text
   postNum     Int?
   draft       Boolean?  @default(false)
 }
