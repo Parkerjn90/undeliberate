@@ -8,16 +8,17 @@ datasource db {
 }
 
 model Posts {
-  id          Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  title       String?   @db.Text
-  content     String    @db.Text
-  author      String?   @db.Text
-  image       String    @db.Text
-  created_at  DateTime? @default(now()) @db.Timestamp(0)
-  updated_at  DateTime? @default(now()) @updatedAt @db.Timestamp(0)
-  description String    @db.Text
+  id          Int        @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  title       String?    @db.Text
+  content     String     @db.Text
+  author      String?    @db.Text
+  image       String     @db.Text
+  created_at  DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at  DateTime?  @default(now()) @updatedAt @db.Timestamp(0)
+  description String     @db.Text
   postNum     Int?
-  draft       Boolean?  @default(false)
+  draft       Boolean?   @default(false)
+  comments    comments[]
 }
 
 model postCategories {
@@ -29,4 +30,24 @@ model postCategories {
 model categories {
   id       Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
   category String @db.VarChar(100)
+}
+
+model comments {
+  id      Int       @id @default(autoincrement())
+  postId  Posts     @relation(fields: [postsId], references: [id])
+  postsId Int
+  replies replies[]
+}
+
+model replies {
+  id         Int      @id @default(autoincrement())
+  comment    comments @relation(fields: [commentsId], references: [id])
+  commentsId Int
+}
+
+model pageDetails {
+  id    Int    @id @default(autoincrement())
+  image String
+  title String
+  about String
 }

@@ -7,30 +7,20 @@ import Layout from '../components/layout'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
-import { prisma } from '../db'
+// import { prisma } from '../db'
 import { useState, useEffect } from 'react'
+// axios switch over from prisma
+import dynamic from 'next/dynamic'
+import parse from 'html-react-parser'
+import axios from 'axios'
+// try prisma again
+import { PrismaClient } from '@prisma/client'
+
 
 type Props = {
   allPosts: Post[]
 }
 
-  async function main() {
-    const post = await prisma.posts.findMany({
-      where: {
-        NOT: {
-          content: 'N/A',
-          draft: false
-        },
-      }
-    })
-    return post
-}
-// main()
-// .then(results => console.log('results: ', results[5]))
-// .catch(e => console.error(e.message))
-// .finally(async () => {
-//   await prisma.$disconnect()
-// })
 
 export default function Index({ allPosts }: Props) {
 
