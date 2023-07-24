@@ -1,38 +1,15 @@
 //----------------new api calls --------------
 
-import { PrismaClient } from '@prisma/client'
+import { prisma } from './db'
 
-const globalForPrisma = global as unknown as {
-  prisma: PrismaClient | undefined
-}
-
-export const prisma = globalForPrisma.prisma ??
-  new PrismaClient({
-    log: ['query'],
+export const getAllPosts = async () => {
+  const allPosts = await prisma.posts.findMany({
+    where: {
+      id: 1
+    }
   })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-
-  async function getAllPosts() {
-    const post = await prisma.posts.findMany({
-      where: {
-        NOT: {
-          content: 'N/A',
-        },
-      }
-    })
-    return post
+  return JSON.stringify(allPosts)
 }
 
-export function getPosts() {
-
-  const posts = getAllPosts()
-  .catch(e => console.error(e.message))
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
-
-  return posts;
-}
-
-console.log('getAllPosts: ', getPosts());
+// console.log('getAllPosts: ', getPosts());

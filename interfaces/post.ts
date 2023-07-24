@@ -1,6 +1,6 @@
 type PostType = {
   title: string
-  created: Date
+  created_at: string
   updated: Date
   image: string
   author: string

@@ -15,27 +15,27 @@ import parse from 'html-react-parser'
 import axios from 'axios'
 // try prisma again
 import { PrismaClient } from '@prisma/client'
+// import functions from api doc
+import { getAllPosts } from '../lib/api'
+
+export const getStaticProps = async () => {
+  const allPosts = await getAllPosts()
+  return {props: {allPosts}}
+}
 
 
 type Props = {
   allPosts: Post[]
 }
 
-
 export default function Index({ allPosts }: Props) {
 
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState(allPosts)
 
-  console.log('posts: ', posts[0])
+  console.log('posts: ', posts)
 
   const heroPost = posts[0]
   // const morePosts = posts.slice(1)
-
-  useEffect(() => {
-    main()
-    .then(results => {
-      setPosts(results)
-    })}, [])
 
   return (
     <>
