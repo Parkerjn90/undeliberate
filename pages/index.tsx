@@ -3,17 +3,10 @@ import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
-// import { getAllPosts, getPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
-// import { prisma } from '../db'
 import { useState, useEffect } from 'react'
-// axios switch over from prisma
-import dynamic from 'next/dynamic'
-import parse from 'html-react-parser'
-import axios from 'axios'
-// try prisma again
 import { PrismaClient } from '@prisma/client'
 // import functions from api doc
 import { getAllPosts } from '../lib/api'
